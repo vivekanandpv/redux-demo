@@ -34,7 +34,10 @@ const cityReducer = (state = [], action) => {
 };
 
 //  Store
-const appStore = createStore(cityReducer);
+const appStore = createStore(
+  cityReducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 //  Subscription
 appStore.subscribe(() => console.log('App Store', appStore.getState()));
