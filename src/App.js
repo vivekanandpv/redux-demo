@@ -1,42 +1,57 @@
-import { useDispatch, useSelector } from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { addCityActionCreator } from './actions/city';
 import { incrementActionCreator } from './actions/counter';
 
-const App = () => {
-  const cities = useSelector((state) => state.cities);
-  const counter = useSelector((state) => state.counter);
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.list = ['Mumbai', 'Bengaluru', 'Chennai', 'Kanpur'];
+  }
 
-  const dispatch = useDispatch();
-
-  const list = ['Mumbai', 'Bengaluru', 'Chennai', 'Kanpur'];
-
-  const addAllCities = () => {
-    list.forEach((c) => {
-      dispatch(addCityActionCreator(c));
+  addAllCities = () => {
+    this.list.forEach((c) => {
+      this.props.addCity(c);
     });
   };
 
-  return (
-    <div className='container p-5'>
-      <h3>Learning Redux | Counter: {counter}</h3>
-      <hr />
-      <ul>
-        {cities.map((c) => (
-          <li key={c}>{c}</li>
-        ))}
-      </ul>
+  render() {
+    return (
+      <div className='container p-5'>
+        <h3>Learning Redux | Counter: {this.props.counter}</h3>
+        <hr />
+        <ul>
+          {this.props.cities.map((c) => (
+            <li key={c}>{c}</li>
+          ))}
+        </ul>
 
-      <button className='btn btn-primary' onClick={addAllCities}>
-        Add All Cities
-      </button>
-      <button
-        className='btn btn-warning ml-3'
-        onClick={() => dispatch(incrementActionCreator())}
-      >
-        Increment
-      </button>
-    </div>
-  );
+        <button className='btn btn-primary' onClick={this.addAllCities}>
+          Add All Cities
+        </button>
+        <button
+          className='btn btn-warning ml-3'
+          onClick={() => this.props.increment()}
+        >
+          Increment
+        </button>
+      </div>
+    );
+  }
+}
+
+const mapStateToProps = (state) => {
+  return {
+    cities: state.cities,
+    counter: state.counter,
+  };
 };
 
-export default App;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addCity: (name) => dispatch(addCityActionCreator(name)),
+    increment: () => dispatch(incrementActionCreator()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
