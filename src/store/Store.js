@@ -1,11 +1,10 @@
 import { applyMiddleware, createStore, compose } from 'redux';
-import { anotherLogger, dummyLogger } from '../middleware/DummyLogger';
 import { appBaseReducer } from '../reducers';
+import reduxLogger from 'redux-logger';
 
 const enhancers = [
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-  applyMiddleware(dummyLogger),
-  applyMiddleware(anotherLogger),
+  applyMiddleware(reduxLogger),
 ];
 
 export const appStore = createStore(
