@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { addCityActionCreator } from './actions/city';
-import { incrementActionCreator } from './actions/counter';
+import { citySlice } from './store/CitySlice';
+import { counterSlice } from './store/CounterSlice';
 
 const App = () => {
   const cities = useSelector((state) => state.cities);
@@ -12,7 +12,7 @@ const App = () => {
 
   const addAllCities = () => {
     list.forEach((c) => {
-      dispatch(addCityActionCreator(c));
+      dispatch(citySlice.actions.addCity(c));
     });
   };
 
@@ -31,7 +31,7 @@ const App = () => {
       </button>
       <button
         className='btn btn-warning ml-3'
-        onClick={() => dispatch(incrementActionCreator())}
+        onClick={() => dispatch(counterSlice.actions.increment())}
       >
         Increment
       </button>
