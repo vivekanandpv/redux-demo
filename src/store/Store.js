@@ -6,13 +6,17 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { configureStore } from '@reduxjs/toolkit';
 import { citySlice } from './CitySlice';
 import { counterSlice } from './CounterSlice';
+import { createEpicMiddleware } from 'redux-observable';
+import appEpics from '../epics/AppEpics';
 
-const storeMiddleware = [applyMiddleware(reduxLogger), applyMiddleware(thunk)];
+const epicMiddleware = createEpicMiddleware();
 
 export const appStore = configureStore({
   reducer: {
     cities: citySlice.reducer,
     counter: counterSlice.reducer,
   },
-  middleware: [reduxLogger, thunk],
+  middleware: [reduxLogger, epicMiddleware, thunk],
 });
+
+epicMiddleware.run(appEpics);

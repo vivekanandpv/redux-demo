@@ -6,5 +6,6 @@ export const counterSlice = createSlice({
   reducers: {
     increment: (counter) => counter + 1,
     decrement: (counter) => counter - 1,
+    customMultiply: (counter, action) => counter * action.payload,
   },
 });
