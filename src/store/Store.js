@@ -1,14 +1,13 @@
 import { applyMiddleware, createStore, compose } from 'redux';
 import { appBaseReducer } from '../reducers';
 import reduxLogger from 'redux-logger';
+import thunk from 'redux-thunk';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
-const enhancers = [
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-  applyMiddleware(reduxLogger),
-];
+const storeMiddleware = [applyMiddleware(reduxLogger), applyMiddleware(thunk)];
 
 export const appStore = createStore(
   appBaseReducer,
   { cities: [], counter: 0 },
-  compose(...enhancers)
+  composeWithDevTools(...storeMiddleware)
 );
