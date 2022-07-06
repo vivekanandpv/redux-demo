@@ -1,4 +1,7 @@
 //  Action creators
+import axios from "axios";
+
+
 export const addCityActionCreator = (city) => {
   // Synchronous variant:
 
@@ -22,15 +25,18 @@ export const addCityActionCreator = (city) => {
   //       type: 'addCity',
   //       payload: city,
   //     });
-  //   }, 1000);
+  //   }, 2000);
   // };
 
   //  Asynchronous variant 2:
   return (dispatch) => {
-    Promise.resolve({
-      type: 'addCity',
-      payload: city,
-    }).then((v) => dispatch(v));
+    axios.get('https://jsonplaceholder.typicode.com/todos/1')
+        .then(res => {
+          dispatch({
+            type: 'addCity',
+            payload: `${city} --> ${res.data.title}`,
+          });
+        });
   };
 };
 
