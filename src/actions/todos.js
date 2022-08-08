@@ -4,7 +4,7 @@ import axios from 'axios';
 export const loadTodos = () => {
   return (dispatch) => {
     axios
-      .get('https://jsonplaceholder.typicode.co m/todos')
+      .get('https://jsonplaceholder.typicode.com/todos')
       .then((res) => {
         //    success action
         dispatch({
