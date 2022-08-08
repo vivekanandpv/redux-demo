@@ -1,10 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { addCityActionCreator } from './actions/city';
 import { incrementActionCreator } from './actions/counter';
+import { loadTodos } from './actions/todos';
 
 const App = () => {
   const cities = useSelector((state) => state.cities);
   const counter = useSelector((state) => state.counter);
+  const todos = useSelector((state) => state.todos.todos);
+  const todosErrorMessage = useSelector((state) => state.todos.errorMessage);
 
   const dispatch = useDispatch();
 
@@ -19,6 +22,7 @@ const App = () => {
   return (
     <div className='container p-5'>
       <h3>Learning Redux | Counter: {counter}</h3>
+      <p className='text-danger'>{todosErrorMessage}</p>
       <hr />
       <ul>
         {cities.map((c) => (
@@ -35,6 +39,15 @@ const App = () => {
       >
         Increment
       </button>
+      <button
+        className='btn btn-info ml-3'
+        onClick={() => dispatch(loadTodos())}
+      >
+        Load Data
+      </button>
+
+      <hr />
+      <pre>{JSON.stringify(todos, null, 2)}</pre>
     </div>
   );
 };

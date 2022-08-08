@@ -8,6 +8,13 @@ const storeMiddleware = [applyMiddleware(reduxLogger), applyMiddleware(thunk)];
 
 export const appStore = createStore(
   appBaseReducer,
-  { cities: [], counter: 0 },
+  {
+    cities: [],
+    counter: 0,
+    todos: {
+      todos: [],
+      errorMessage: null,
+    },
+  },
   composeWithDevTools(...storeMiddleware)
 );
